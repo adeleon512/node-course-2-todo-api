@@ -33,7 +33,6 @@ app.get('/todos', (req, res) => {
    });
 });
 
-//GET /todos/12341234
 app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
 
@@ -48,16 +47,6 @@ app.get('/todos/:id', (req, res) => {
     }).catch((e) => {
         res.status(400).send()
     });
-
-    //Validate id using isValid
-        //404 - send back empty send
-
-    //findById
-        //success
-            //if Todo -send it back
-            //if no Todo - send back a 404 with empty body
-        //error
-            //400 - send empty body back
 });
 
 app.listen(3000, () => {
