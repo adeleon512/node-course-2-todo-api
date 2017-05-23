@@ -1,15 +1,15 @@
 const expect = require('expect');
 const request = require('supertest');
-const {ObjectId} = require('mongodb');
+const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 
 const todos = [{
-    _id: new ObjectId(),
+    _id: new ObjectID(),
     text: "First test todo"
 }, {
-    _id: new ObjectId(),
+    _id: new ObjectID(),
     text: "Second test todo",
     completed: true,
     completedAt: 333
@@ -88,7 +88,7 @@ describe('GET /todos/:id', () => {
 
     it('it should return 404 if todo not found', (done) => {
         //make sure you get a 404 back // call hexString to find an ID
-        var someId = new ObjectId().toHexString();
+        var someId = new ObjectID().toHexString();
 
         request(app)
             .get(`/todos/${someId}`)
@@ -127,7 +127,7 @@ describe('DELETE /todos/:id', () => {
             });
     });
     it('should return a 404 if todo not found', (done) => {
-        var someId = new ObjectId().toHexString();
+        var someId = new ObjectID().toHexString();
 
         request(app)
             .delete(`/todos/${someId}`)
@@ -162,6 +162,9 @@ describe('PATCH /todos/:id', () => {
             .end(done)
     });
     it('should clear completedAt when todo is not completed', (done) => {
+        //grab Id of second todo item
+        //update text, set completed to false
+        //test is changed, completed is false, completedAt is null, toNotExist
         var hexId = todos[1]._id.toHexString();
         var text = 'Update to second test todo';
 
@@ -178,5 +181,6 @@ describe('PATCH /todos/:id', () => {
                 expect(res.body.todo.completedAt).toNotExist();
             })
             .end(done)
+
     });
 });
